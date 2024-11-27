@@ -7,6 +7,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddHttpClient("api-movie", client => client.BaseAddress = new Uri("https://localhost:7273/"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

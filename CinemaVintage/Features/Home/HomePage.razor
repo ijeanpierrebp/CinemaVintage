@@ -1,0 +1,34 @@
+﻿@page "/"
+@attribute [StreamRendering]
+@inject IHttpClientFactory Ihcf;
+@inject NavigationManager nv
+
+<PageTitle>Home</PageTitle>
+
+
+ 
+@if(_allMovies != null)
+{
+        @foreach (var item in _allMovies)
+        {
+            <Card _movie="item"></Card>
+        }
+}
+else{
+    <p>Loading...</p>
+} 
+  
+@code{
+    private IEnumerable<Movie>? _allMovies;
+    private Movie? test = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var client = Ihcf.CreateClient("api-movie");
+        _allMovies = await client.GetFromJsonAsync<IEnumerable<Movie>>("/data.json");
+        test = _allMovies.First(); 
+    }
+
+}
+
